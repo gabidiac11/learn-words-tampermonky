@@ -1,0 +1,38 @@
+// ==UserScript==
+// @name         Side by side translate
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        *://*/*
+// @icon         https://learn-word-56d10.web.app/favicon.ico
+// @grant        none
+// ==/UserScript==
+
+(() => {
+  const createMyNode = (htmlStringToBeParsed) => {
+    const div = document.createElement("DIV");
+    div.innerHTML = htmlStringToBeParsed;
+    console.log("createMyNode", { div: div.firstChild });
+
+    return div.firstChild;
+  };
+
+  const load = "@@@@@@@@@@@@@@@@@@@@_SHOULD_LOAD_SCRIPT_@@@@@@@@@@@@@@@@@@@@";
+  if (!load) {
+    return;
+  }
+
+  const container = createMyNode(`<div id="learn-words-app-root"></div>`);
+  document.body.append(container);
+
+  // Create a new link element
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "@@@@@@@@@@@@@@@@@@@@_BUNDLE_CSS_SRC_@@@@@@@@@@@@@@@@@@@@";
+  document.head.appendChild(link);
+
+  const script = document.createElement("script");
+  script.src = "@@@@@@@@@@@@@@@@@@@@_BUNDLE_JS_SRC_@@@@@@@@@@@@@@@@@@@@";
+  document.head.appendChild(script);
+})();

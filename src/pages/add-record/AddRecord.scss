@@ -1,0 +1,20 @@
+.learn-words-app-url-record-page {
+  button.paste-btn {
+    padding: 0;
+    margin: 0;
+    min-width: auto;
+  }
+}
+
+.learn-words-app-add-record-page {
+  width: 100%;
+  .learn-words-app-page-input-container,
+  .learn-words-app-page-input-container,
+  .page-input {
+    width: 100%;
+  }
+  textarea {
+    text-align: justify;
+    padding: 0 25px 0 10px;
+  }
+}
