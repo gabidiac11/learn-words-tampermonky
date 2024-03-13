@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Side by side translate
+// @name         Learn word
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  try to take over the world!
@@ -18,7 +18,19 @@
     return div.firstChild;
   };
 
-  const load = "@@@@@@@@@@@@@@@@@@@@_SHOULD_LOAD_SCRIPT_@@@@@@@@@@@@@@@@@@@@";
+  const url = window.location.href
+    .replace(window.location.search, "")
+    .replace("https://m.", "https://");
+    
+  const load = [
+    /^https:\/\/www\.dw\.com\/ru\/[\w\-_]+\/a-[\d]+\/?$/i,
+    /^https:\/\/genius\.com\/[\w-_]+$/,
+    /^https:\/\/genius\.com\/albums\/([\w-_]+)\/([\w-_]+)$/,
+    /^https:\/\/lenta\.ru\/(articles|news|brief)\/\d{4}\/\d{2}\/\d{2}\/[\w\-_]+\/?$/i,
+    /^https:\/\/ura\.news\/(news|articles)\/[\d]+\/?$/i,
+    /^https:\/\/meduza\.io\/(feature|news)\/\d{4}\/\d{2}\/\d{2}\/[\w\-_]+\/?$/i,
+  ].some((f) => f.test(url));
+
   if (!load) {
     return;
   }

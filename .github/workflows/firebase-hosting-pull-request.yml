@@ -10,6 +10,8 @@ permissions:
 env:
   REACT_APP_FIREBASE_CONFIG: ${{ secrets.LEARN_WORD_REACT_APP_FIREBASE_CONFIG }}
   REACT_APP_DB_ROOT_KEY: ${{ secrets.LEARN_WORD_REACT_APP_DB_ROOT_KEY }}
+  REACT_APP_WEB_URL: ${{ secrets.REACT_APP_WEB_URL }}
+  REACT_APP_SOURCE_URL: ${{ secrets.REACT_APP_SOURCE_URL }}
 jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'

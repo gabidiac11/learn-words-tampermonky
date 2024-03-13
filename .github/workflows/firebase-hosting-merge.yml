@@ -9,6 +9,8 @@ name: Deploy to Firebase Hosting on merge
 env:
   REACT_APP_FIREBASE_CONFIG: ${{ secrets.LEARN_WORD_REACT_APP_FIREBASE_CONFIG }}
   REACT_APP_DB_ROOT_KEY: ${{ secrets.LEARN_WORD_REACT_APP_DB_ROOT_KEY }}
+  REACT_APP_WEB_URL: ${{ secrets.REACT_APP_WEB_URL }}
+  REACT_APP_SOURCE_URL: ${{ secrets.REACT_APP_SOURCE_URL }}
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
