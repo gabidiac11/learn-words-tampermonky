@@ -65,7 +65,7 @@ async function main() {
   );
   const styleUrl = `${baseUrl}/${stylePath}`;
 
-  const template = await getFile("scripts/tamper-template");
+  const template = await getFile("monkey-scripts/tamper-template");
   const script = template
     .replace("@@@_ENV_@@@", domain)
     .replace("// @@@_LOAD_SCRIPTS_FUNC_@@@", await getLoadConditionCode())
