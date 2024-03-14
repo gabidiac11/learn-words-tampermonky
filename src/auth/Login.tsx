@@ -4,7 +4,6 @@ import { auth } from "../firebase";
 import {
   FormControl,
   OutlinedInput as Input,
-  InputLabel,
   FormGroup,
 } from "@mui/material";
 import { Button, Typography } from "@mui/material";
