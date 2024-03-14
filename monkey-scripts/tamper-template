@@ -10,36 +10,16 @@
 // ==/UserScript==
 
 (() => {
-  let loadScripts = () => false;
-  // @@@_LOAD_SCRIPTS_FUNC_@@@
+  const container = document.createElement("div");
+  container.id = "learn-words-app-root";
+  document.body.append(container);
+  
+  const style = document.createElement("style");
+  style.textContent = `@@@_CSS_@@@`;
+  document.body.append(style);
 
-  if (!!loadScripts()) {
-    return;
-  }
-
-  try {
-    console.log("[LW]: Running script from @@@_SCRIPT_SOURCE_@@@.");
-
-    const container = document.createElement("div");
-    container.id = "learn-words-app-root";
-    document.body.append(container);
-
-    console.log("[LW]: Started loading bundle js...");
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "@@@_BUNDLE_CSS_SRC_@@@";
-    document.head.appendChild(link);
-
-    console.log("[LW]: Loaded bundle js.");
-    console.log("[LW]: Started loading bundle CSS...");
-
-    const script = document.createElement("script");
-    script.src = "@@@_BUNDLE_JS_SRC_@@@";
-    document.head.appendChild(script);
-
-    console.log("[LW]: Loaded learn-words.");
-  } catch (err) {
-    console.error("[LW]: Error occured.", { err });
-  }
+  // @@@_JS_@@@
+  
 })();
+
+

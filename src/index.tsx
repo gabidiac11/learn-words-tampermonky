@@ -6,19 +6,22 @@ import reportWebVitals from './reportWebVitals';
 import "./firebase";
 import { AppContextProvider } from './app-context/AppContext';
 import { AppSnackbar } from './components/AppSnackbar';
+import { loadScripts } from './sourceUrlRegexes';
 
 const root = ReactDOM.createRoot(
   document.getElementById('learn-words-app-root') as HTMLElement
 );
 
-root.render(
-  <React.StrictMode>
-    <AppContextProvider>
-      <App />
-      <AppSnackbar />
-    </AppContextProvider>
-  </React.StrictMode>
-);
+if(loadScripts()) {
+  root.render(
+    <React.StrictMode>
+      <AppContextProvider>
+        <App />
+        <AppSnackbar />
+      </AppContextProvider>
+    </React.StrictMode>
+  );
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

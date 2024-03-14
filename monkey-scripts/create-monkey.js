@@ -55,23 +55,22 @@ async function main() {
   const domain = new URL(baseUrl).hostname;
 
   const html = await getFile("build/index.html");
-  const [, scriptPath] = html.match(
-    /src="\.\/(static\/js\/main\.[\w\d]+\.js)"><\/script>/
+  let [, js] = html.match(
+    /<script[^>]*>([\s\S]*?)<\/script>/
   );
-  const scriptUrl = `${baseUrl}/${scriptPath}`;
-
-  const [, stylePath] = html.match(
-    /<link href="\.\/(static\/css\/main\.[\w\d]+\.css)"/
-  );
-  const styleUrl = `${baseUrl}/${stylePath}`;
-
-  const template = await getFile("monkey-scripts/tamper-template");
+  js = js.replace(/\/\*\! For license information please see main\.[\w]+\.js\.LICENSE\.txt \*\//, "");
+  
+  const [, css] = html.match(
+    /<style[^>]*>([\s\S]*?)<\/style>/
+    );
+    
+    const template = await getFile("monkey-scripts/tamper-template");
+    
   const script = template
-    .replace("@@@_ENV_@@@", domain)
-    .replace("// @@@_LOAD_SCRIPTS_FUNC_@@@", await getLoadConditionCode())
-    .replace("@@@_SCRIPT_SOURCE_@@@", `${baseUrl}/${outputScriptName}`)
-    .replace("@@@_BUNDLE_CSS_SRC_@@@", styleUrl)
-    .replace("@@@_BUNDLE_JS_SRC_@@@", scriptUrl);
+    .replace("@@@_ENV_@@@", () => domain)
+    .replace("@@@_CSS_@@@", () => css)
+    // aparently if you don't pass a callback and the js contains something replace does some bs
+    .replace(/\/\/\s\@\@\@_JS_\@\@\@/, () => js)
   await writeFile(`build/${outputScriptName}`, script);
 
   await removeFile("build/index.html");
