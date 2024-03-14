@@ -2,6 +2,7 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
+const outputScriptName = "tampermonkey-script.js";
 const currentDirectory = process.cwd();
 
 async function removeFile(fileName) {
@@ -41,8 +42,17 @@ async function writeFile(filePath, data) {
   });
 }
 
+async function getLoadConditionCode() {
+  let code = (await getFile(`src/sourceUrlRegexes.ts`))
+    .replace("export default urlRegexes;", "")
+    .replaceAll("export ", "")
+    .replace("const loadScripts", "loadScripts");
+  return code;
+}
+
 async function main() {
   const baseUrl = process.env.REACT_APP_SOURCE_URL;
+  const domain = new URL(baseUrl).hostname;
 
   const html = await getFile("build/index.html");
   const [, scriptPath] = html.match(
@@ -57,15 +67,12 @@ async function main() {
 
   const template = await getFile("scripts/tamper-template");
   const script = template
-    .replace(
-      "@@@@@@@@@@@@@@@@@@@@_BUNDLE_CSS_SRC_@@@@@@@@@@@@@@@@@@@@",
-      styleUrl
-    )
-    .replace(
-      "@@@@@@@@@@@@@@@@@@@@_BUNDLE_JS_SRC_@@@@@@@@@@@@@@@@@@@@",
-      scriptUrl
-    );
-  await writeFile("build/tampermonkey-script.js", script);
+    .replace("@@@_ENV_@@@", domain)
+    .replace("// @@@_LOAD_SCRIPTS_FUNC_@@@", await getLoadConditionCode())
+    .replace("@@@_SCRIPT_SOURCE_@@@", `${baseUrl}/${outputScriptName}`)
+    .replace("@@@_BUNDLE_CSS_SRC_@@@", styleUrl)
+    .replace("@@@_BUNDLE_JS_SRC_@@@", scriptUrl);
+  await writeFile(`build/${outputScriptName}`, script);
 
   await removeFile("build/index.html");
 }

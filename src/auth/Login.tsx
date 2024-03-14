@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { auth } from "../firebase";
 import {
@@ -45,9 +45,6 @@ const Login = () => {
 
         <FormGroup className="learn-words-app-buttons">
           <FormControl className="learn-words-app-form-control">
-            <InputLabel className="learn-words-app-form-label" htmlFor="email-input">
-              Adresă de poștă electronică{" "}
-            </InputLabel>
             <Input
               onKeyDown={onEnterSubmit}
               placeholder="Email address"
@@ -59,9 +56,6 @@ const Login = () => {
             />
           </FormControl>
           <FormControl className="learn-words-app-form-control">
-            <InputLabel className="learn-words-app-form-label" htmlFor="password-input">
-              Parolă super sucurizantă
-            </InputLabel>
             <Input
               onKeyDown={onEnterSubmit}
               placeholder="Password"

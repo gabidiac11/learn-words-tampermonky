@@ -9,12 +9,15 @@
     flex-direction: column;
   }
   .learn-words-app-button {
-    max-width: 400px;
+    width: 100%;
     margin: 20px 0px;
   }
   .learn-words-app-form-control {
     min-width: 100%;
     margin-bottom: 30px;
+    input {
+      height: 3.4375em;
+    }
   }
 }
 

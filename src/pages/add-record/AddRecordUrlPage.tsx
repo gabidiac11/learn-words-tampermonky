@@ -16,12 +16,18 @@ import { fetchUrlContent } from "../../core/wordHelpers";
 import "./AddRecord.scss";
 import { webAppUrl } from "../../constants";
 
+const getUrl = () => {
+  if(window.location.hostname === "localhost") {
+    return "https://lenta.ru/articles/2024/03/13/donoryspermi/";
+  }
+  return window.location.href.replace(window.location.search, "")
+}
+
 export const AddRecordUrlPage = () => {
   const { displayError } = useUIFeedback();
   const { addRecord } = useWordFunctions();
 
-  const [urlValue] = useState(window.location.href.replace(window.location.search, ""));
-  // const [urlValue] = useState(`https://lenta.ru/articles/2024/03/13/donoryspermi/`);
+  const [urlValue] = useState(getUrl());
   const [desktopUrl, setDesktopUrl] = useState("");
   const [urlFetched, setUrlFetched] = useState("");
 

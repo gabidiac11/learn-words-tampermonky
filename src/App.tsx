@@ -73,7 +73,7 @@ function AppWrapper() {
                 className="learn-word-app-activator-close"
                 onClick={() => setOpen(false)}
               >
-                Close
+                x
               </Button>
             </div>
             <App />

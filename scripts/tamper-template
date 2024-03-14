@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Learn word
+// @name         Learn word @@@_ENV_@@@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  try to take over the world!
@@ -10,41 +10,36 @@
 // ==/UserScript==
 
 (() => {
-  const createMyNode = (htmlStringToBeParsed) => {
-    const div = document.createElement("DIV");
-    div.innerHTML = htmlStringToBeParsed;
-    console.log("createMyNode", { div: div.firstChild });
+  let loadScripts = () => false;
+  // @@@_LOAD_SCRIPTS_FUNC_@@@
 
-    return div.firstChild;
-  };
-
-  const url = window.location.href
-    .replace(window.location.search, "")
-    .replace("https://m.", "https://");
-    
-  const load = [
-    /^https:\/\/www\.dw\.com\/ru\/[\w\-_]+\/a-[\d]+\/?$/i,
-    /^https:\/\/genius\.com\/[\w-_]+$/,
-    /^https:\/\/genius\.com\/albums\/([\w-_]+)\/([\w-_]+)$/,
-    /^https:\/\/lenta\.ru\/(articles|news|brief)\/\d{4}\/\d{2}\/\d{2}\/[\w\-_]+\/?$/i,
-    /^https:\/\/ura\.news\/(news|articles)\/[\d]+\/?$/i,
-    /^https:\/\/meduza\.io\/(feature|news)\/\d{4}\/\d{2}\/\d{2}\/[\w\-_]+\/?$/i,
-  ].some((f) => f.test(url));
-
-  if (!load) {
+  if (!!loadScripts()) {
     return;
   }
 
-  const container = createMyNode(`<div id="learn-words-app-root"></div>`);
-  document.body.append(container);
+  try {
+    console.log("[LW]: Running script from @@@_SCRIPT_SOURCE_@@@.");
 
-  // Create a new link element
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "@@@@@@@@@@@@@@@@@@@@_BUNDLE_CSS_SRC_@@@@@@@@@@@@@@@@@@@@";
-  document.head.appendChild(link);
+    const container = document.createElement("div");
+    container.id = "learn-words-app-root";
+    document.body.append(container);
 
-  const script = document.createElement("script");
-  script.src = "@@@@@@@@@@@@@@@@@@@@_BUNDLE_JS_SRC_@@@@@@@@@@@@@@@@@@@@";
-  document.head.appendChild(script);
+    console.log("[LW]: Started loading bundle js...");
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "@@@_BUNDLE_CSS_SRC_@@@";
+    document.head.appendChild(link);
+
+    console.log("[LW]: Loaded bundle js.");
+    console.log("[LW]: Started loading bundle CSS...");
+
+    const script = document.createElement("script");
+    script.src = "@@@_BUNDLE_JS_SRC_@@@";
+    document.head.appendChild(script);
+
+    console.log("[LW]: Loaded learn-words.");
+  } catch (err) {
+    console.error("[LW]: Error occured.", { err });
+  }
 })();
