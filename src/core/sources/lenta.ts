@@ -1,4 +1,3 @@
-import { urlRegexes }from "../../sourceUrlRegexes";
 import { AppGenericError } from "../types";
 import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 
@@ -7,7 +6,8 @@ import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 export const lentaArticleSource = {
   name: "Lenta",
   img: "https://icdn.lenta.ru/images/icons/icon-256x256.png",
-  regex: () => urlRegexes.lentaArticleSource,
+  regex: () =>
+    /^https:\/\/lenta\.ru\/(articles|news|brief)\/\d{4}\/\d{2}\/\d{2}\/[\w\-_]+\/?$/i,
   parse: async (html: string) => {
     const article = parseHtml(html).querySelector(
       `.topic-page__container`

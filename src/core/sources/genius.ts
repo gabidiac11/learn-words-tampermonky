@@ -1,12 +1,11 @@
 import axios from "axios";
-import { urlRegexes }from "../../sourceUrlRegexes";
 import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 
 // Ex: https://genius.com/Husky-stupid-bullet-lyrics
 export const geniousSongSource = {
   name: "Genius Song",
   img: "https://assets.genius.com/images/apple-touch-icon.png?1709224724",
-  regex: () => urlRegexes.geniousSongSource,
+  regex: () => /^https:\/\/genius\.com\/[\w-_]+$/,
   parse: async (html: string) => {
     const body = parseHtml(html);
     const children = body.querySelectorAll(
@@ -27,7 +26,7 @@ export const geniousSongSource = {
 export const geniousAlbumSource = {
   name: "Genius Album",
   img: "https://assets.genius.com/images/apple-touch-icon.png?1709224724",
-  regex: () => urlRegexes.geniousAlbumSource,
+  regex: () => /^https:\/\/genius\.com\/albums\/([\w-_]+)\/([\w-_]+)$/,
   parse: async (albumPageHtml: string) => {
     const getSongLinks = (): string[] => {
       const children = parseHtml(albumPageHtml).querySelectorAll(

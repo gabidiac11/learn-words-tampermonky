@@ -1,4 +1,3 @@
-import { urlRegexes }from "../../sourceUrlRegexes";
 import { AppGenericError } from "../types";
 import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 
@@ -7,7 +6,7 @@ import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 export const uraArticleSource = {
   name: "URA.RU",
   img: "https://s.ura.news/favicon.ico?3",
-  regex: () => urlRegexes.uraArticleSource,
+  regex: () => /^https:\/\/ura\.news\/(news|articles)\/[\d]+\/?$/i,
   parse: async (html: string) => {
     const articleContainer = parseHtml(html).querySelector(
       `.vc-publication-center`

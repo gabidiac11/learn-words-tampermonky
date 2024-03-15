@@ -12,7 +12,7 @@ import { AddRecordUrlPage } from "./pages/add-record/AddRecordUrlPage";
 import { Button } from "@mui/material";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
-import { loadScripts } from "./sourceUrlRegexes";
+import { loadScripts } from "./core/sources";
 
 function App() {
   const { user, isVerifying } = useAuthInit();

@@ -1,4 +1,3 @@
-import { urlRegexes }from "../../sourceUrlRegexes";
 import { AppGenericError } from "../types";
 import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 
@@ -6,7 +5,7 @@ import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 export const dwArticleSource = {
   name: "DW",
   img: "https://www.dw.com/images/icons/favicon-32x32.png",
-  regex: () => urlRegexes.dwArticleSource,
+  regex: () => /^https:\/\/www\.dw\.com\/ru\/[\w\-_]+\/a-[\d]+\/?$/i,
   parse: async (html: string) => {
     const article = parseHtml(html).querySelector("article") as HTMLElement;
     if (!article)

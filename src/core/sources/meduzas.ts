@@ -1,4 +1,3 @@
-import { urlRegexes }from "../../sourceUrlRegexes";
 import { AppGenericError } from "../types";
 import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 
@@ -7,7 +6,8 @@ import { parseHtml, parseTitle, getPostParseElement } from "./parseUtils";
 export const meduzaArticleSource = {
   name: "Meduza",
   img: "https://meduza.io/favicon-32x32.png",
-  regex: () => urlRegexes.meduzaArticleSource,
+  regex: () =>
+    /^https:\/\/meduza\.io\/(feature|news)\/\d{4}\/\d{2}\/\d{2}\/[\w\-_]+\/?$/i,
   parse: async (html: string) => {
     const article = parseHtml(html).querySelector(
       `.GeneralMaterial-module-root`
