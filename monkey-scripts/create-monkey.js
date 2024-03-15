@@ -71,6 +71,7 @@ async function main() {
     .replace("@@@_CSS_@@@", () => css)
     // aparently if you don't pass a callback and the js contains something replace does some bs
     .replace(/\/\/\s@@@_JS_\@\@\@/, () => js)
+    .replace("@@@_DATE_@@@", () => `${new Date()}`)
   await writeFile(`build/${outputScriptName}`, script);
 
   await removeFile("build/index.html");

@@ -10,6 +10,8 @@
 // ==/UserScript==
 
 (() => {
+  // Generated: @@@_DATE_@@@
+  
   const container = document.createElement("div");
   container.id = "learn-words-app-root";
   document.body.append(container);
