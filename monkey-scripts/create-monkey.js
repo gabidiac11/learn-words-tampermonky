@@ -70,7 +70,7 @@ async function main() {
     .replace("@@@_ENV_@@@", () => domain)
     .replace("@@@_CSS_@@@", () => css)
     // aparently if you don't pass a callback and the js contains something replace does some bs
-    .replace(/\/\/\s\@\@\@_JS_\@\@\@/, () => js)
+    .replace(/\/\/\s@@@_JS_\@\@\@/, () => js)
   await writeFile(`build/${outputScriptName}`, script);
 
   await removeFile("build/index.html");

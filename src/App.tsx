@@ -12,6 +12,7 @@ import { AddRecordUrlPage } from "./pages/add-record/AddRecordUrlPage";
 import { Button } from "@mui/material";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
+import { loadScripts } from "./sourceUrlRegexes";
 
 function App() {
   const { user, isVerifying } = useAuthInit();
@@ -47,6 +48,23 @@ function App() {
 
 function AppWrapper() {
   const [open, setOpen] = useState(false);
+  const [showApp, setShowApp] = useState(loadScripts());
+
+  useEffect(() => {
+    const onLocationChange = () => {
+      setShowApp(loadScripts());
+    };
+    window.addEventListener("popstate", onLocationChange);
+    window.addEventListener("hashchange", onLocationChange);
+    return () => {
+      window.addEventListener("popstate", onLocationChange);
+      window.addEventListener("hashchange", onLocationChange);
+    };
+  }, []);
+  if (!showApp) {
+    return null;
+  }
+
   return (
     <div className="learn-word-app-master-root">
       {!open && (

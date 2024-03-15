@@ -11,6 +11,9 @@ export const urlRegexes = {
 };
 
 export const loadScripts = () => {
+  if(window.location.hostname === "localhost") {
+    return true;
+  }
   const url = window.location.href
     .replace(window.location.search, "")
     .replace("https://m.", "https://");
