@@ -11,17 +11,19 @@
 
 (() => {
   // Generated: @@@_DATE_@@@
-  
-  const container = document.createElement("div");
-  container.id = "learn-words-app-root";
-  document.body.append(container);
-  
-  const style = document.createElement("style");
-  style.textContent = `@@@_CSS_@@@`;
-  document.body.append(style);
 
-  // @@@_JS_@@@
-  
+  setTimeout(() => {
+    const container = document.createElement("div");
+    container.id = "learn-words-app-root";
+    document.body.append(container);
+    
+    const style = document.createElement("style");
+    style.textContent = `@@@_CSS_@@@`;
+    document.body.append(style);
+
+    // @@@_JS_@@@
+
+  }, 2500);
 })();
 
 

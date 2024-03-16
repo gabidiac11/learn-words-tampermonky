@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
@@ -42,14 +43,6 @@ async function writeFile(filePath, data) {
   });
 }
 
-async function getLoadConditionCode() {
-  let code = (await getFile(`src/sourceUrlRegexes.ts`))
-    .replace("export default urlRegexes;", "")
-    .replaceAll("export ", "")
-    .replace("const loadScripts", "loadScripts");
-  return code;
-}
-
 async function main() {
   const baseUrl = process.env.REACT_APP_SOURCE_URL;
   const domain = new URL(baseUrl).hostname;
@@ -64,7 +57,7 @@ async function main() {
     /<style[^>]*>([\s\S]*?)<\/style>/
     );
     
-    const template = await getFile("monkey-scripts/tamper-template");
+    const template = await getFile("monkey-scripts/tamper-template.js");
     
   const script = template
     .replace("@@@_ENV_@@@", () => domain)

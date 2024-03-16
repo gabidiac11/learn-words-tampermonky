@@ -52,15 +52,20 @@ function AppWrapper() {
 
   useEffect(() => {
     const onLocationChange = () => {
+      if(showApp) {
+        return;
+      }
       setShowApp(loadScripts());
     };
     window.addEventListener("popstate", onLocationChange);
     window.addEventListener("hashchange", onLocationChange);
+    window.addEventListener("click", onLocationChange);
     return () => {
-      window.addEventListener("popstate", onLocationChange);
-      window.addEventListener("hashchange", onLocationChange);
+      window.removeEventListener("popstate", onLocationChange);
+      window.removeEventListener("hashchange", onLocationChange);
+      window.removeEventListener("click", onLocationChange);
     };
-  }, []);
+  }, [showApp]);
   if (!showApp) {
     return null;
   }
