@@ -1,5 +1,10 @@
 import axios from "axios";
-import { parseHtml, parseTitle, getPostParseElement, Source } from "./parseUtils";
+import {
+  parseHtml,
+  parseTitle,
+  getPostParseElement,
+  Source,
+} from "./parseUtils";
 
 // Ex: https://genius.com/Husky-stupid-bullet-lyrics
 export const geniousSongSource: Source = {
@@ -29,9 +34,15 @@ export const geniousAlbumSource: Source = {
   regex: () => /^https:\/\/genius\.com\/albums\/([\w-_]+)\/([\w-_]+)$/,
   parse: async (albumPageHtml: string) => {
     const getSongLinks = (): string[] => {
-      const children = parseHtml(albumPageHtml).querySelectorAll(
+      const albumNode = parseHtml(albumPageHtml);
+      let children = albumNode.querySelectorAll(
         `.chart_row-content a[href^="https://genius.com/"]`
       );
+      if (!children.length) {
+        children = albumNode.querySelectorAll(
+          `.tracklist_row-header a[href^="https://genius.com/"]`
+        );
+      }
       const urls = Array.prototype.map.call(
         children,
         function (node: HTMLAnchorElement) {
