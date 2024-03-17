@@ -25,9 +25,9 @@ const getUrl = () => {
 export const AddRecordUrlPage = () => {
   const { displayError } = useUIFeedback();
   const { addRecord } = useWordFunctions();
+  const [readOnly] = useState(window.location.hostname !== "localhost");
 
-  const [urlValue] = useState(getUrl());
-  const [desktopUrl, setDesktopUrl] = useState("");
+  const [urlValue, setUrlValue] = useState(getUrl());
   const [urlFetched, setUrlFetched] = useState("");
 
   const [name, setName] = useState("");
@@ -42,9 +42,9 @@ export const AddRecordUrlPage = () => {
   const [isFetching, setIsFetching] = useRefState(false);
 
   const onGenerate = useCallback(
-    async (name: string, content: string, source: string) => {
+    async (name: string, content: string, url: string) => {
       try {
-        const record = await addRecord(name, content, source);
+        const record = await addRecord(name, content, url);
         window.open(`${webAppUrl}/records/${record.id}`, "_blank");
       } catch (error) {
         console.error(error);
@@ -100,23 +100,14 @@ export const AddRecordUrlPage = () => {
       return;
     }
 
-    onGenerate(name, content, desktopUrl);
-  }, [
-    name,
-    content,
-    urlFetched,
-    urlValue,
-    onGenerate,
-    desktopUrl,
-    displayError,
-  ]);
+    onGenerate(name, content, urlValue);
+  }, [name, content, urlFetched, urlValue, onGenerate, displayError]);
 
   const onFetchUrlContent = useCallback(
     async (url: string) => {
       setIsFetching(true);
       try {
-        const { name, content, url: desktopUrl } = await fetchUrlContent(url);
-        setDesktopUrl(desktopUrl);
+        const { name, content } = await fetchUrlContent(url);
         setUrlFetched(url);
         setName(name);
         setContent(content);
@@ -180,7 +171,8 @@ export const AddRecordUrlPage = () => {
                 variant="outlined"
                 value={urlValue}
                 error={errors.url}
-                readOnly
+                readOnly={readOnly}
+                onChange={(e) => setUrlValue(e.target.value)}
                 endDecorator={
                   <div className="flex">
                     <Button

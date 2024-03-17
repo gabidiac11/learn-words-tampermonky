@@ -11,8 +11,6 @@ const regexes = {
   containsWordRegex: () => /[\p{L}_]+/u,
 };
 
-const getDesktopSite = (url: string) => url.replace("https://m.", "https://");
-
 export const generateRecordId = (name: string, timestamp: number) =>
   `${timestamp}-${name.slice(0, 20).replace(/[^\p{L}_]+/giu, "_")}-${uuidv4()}`;
 
@@ -24,13 +22,12 @@ export const fetchUrlContent = async (
 ): Promise<{ name: string; content: string; url: string }> => {
   if (!url) throw new AppGenericError("Empty url.");
 
-  const desktopUrl = getDesktopSite(url);
-  const source = allowedSources.find((f) => f.regex().test(desktopUrl));
+  const source = allowedSources.find((f) => f.regex().test(url));
   if (!source) {
     throw new AppGenericError(`Url is not supported`);
   }
 
-  const { data: html } = await axios.get<string>(desktopUrl, {
+  const { data: html } = await axios.get<string>(url, {
     headers: {
       "Content-Type": "text/html",
     },
@@ -40,5 +37,5 @@ export const fetchUrlContent = async (
       `Ups! Something went wrong. Could not fetch content.`
     );
   }
-  return { ...(await source.parse(html)), url: desktopUrl };
+  return { ...(await source.parse(html, url)), url: url };
 };

@@ -5,7 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./firebase";
 import { AppContextProvider } from "./app-context/AppContext";
-import { AppSnackbar } from "./components/AppSnackbar";
 
 const root = ReactDOM.createRoot(
   document.getElementById("learn-words-app-root") as HTMLElement
@@ -17,7 +16,6 @@ root.render(
   <React.StrictMode>
     <AppContextProvider>
       <App />
-      <AppSnackbar />
     </AppContextProvider>
   </React.StrictMode>
 );

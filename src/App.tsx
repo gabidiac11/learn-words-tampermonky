@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
 import { loadScripts } from "./core/sources";
+import { AppSnackbar } from "./components/AppSnackbar";
 
 function App() {
   const { user, isVerifying } = useAuthInit();
@@ -52,7 +53,7 @@ function AppWrapper() {
 
   useEffect(() => {
     const onLocationChange = () => {
-      if(showApp) {
+      if (showApp) {
         return;
       }
       setShowApp(loadScripts());
@@ -100,6 +101,7 @@ function AppWrapper() {
               </Button>
             </div>
             <App />
+            <AppSnackbar />
           </div>
         </div>
       )}
