@@ -48,22 +48,25 @@ async function main() {
   const domain = new URL(baseUrl).hostname;
 
   const html = await getFile("build/index.html");
-  let [, js] = html.match(
-    /<script[^>]*>([\s\S]*?)<\/script>/
+  let [, js] = html.match(/<script[^>]*>([\s\S]*?)<\/script>/);
+  js = js.replace(
+    /\/\*\! For license information please see main\.[\w]+\.js\.LICENSE\.txt \*\//,
+    ""
   );
-  js = js.replace(/\/\*\! For license information please see main\.[\w]+\.js\.LICENSE\.txt \*\//, "");
-  
-  const [, css] = html.match(
-    /<style[^>]*>([\s\S]*?)<\/style>/
-    );
-    
-    const template = await getFile("monkey-scripts/tamper-template.js");
-    
+
+  const [, css] = html.match(/<style[^>]*>([\s\S]*?)<\/style>/);
+
+  const template = await getFile("monkey-scripts/tamper-template.js");
+
+  const dateString = `${new Date().toLocaleString("ro-RO", {
+    timeZone: "Europe/Bucharest",
+  })}`;
+
   const script = template
     .replace("@@@_ENV_@@@", () => domain)
     .replace("@@@_CSS_@@@", () => css)
     .replace(/\/\/\s@@@_JS_\@\@\@/, () => js)
-    .replace("@@@_DATE_@@@", () => `${new Date()}`)
+    .replace("@@@_DATE_@@@", () => dateString);
   await writeFile(`build/${outputScriptName}`, script);
 
   await removeFile("build/index.html");
