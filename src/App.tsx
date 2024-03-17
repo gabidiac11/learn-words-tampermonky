@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Login from "./auth/Login";
 import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
@@ -50,6 +50,7 @@ function App() {
 function AppWrapper() {
   const [open, setOpen] = useState(false);
   const [showApp, setShowApp] = useState(loadScripts());
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     const onLocationChange = () => {
@@ -67,6 +68,20 @@ function AppWrapper() {
       window.removeEventListener("click", onLocationChange);
     };
   }, [showApp]);
+
+  useEffect(() => {
+    if (showApp) {
+      return;
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setShowApp(loadScripts());
+    }, 1000);
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, [showApp]);
+
   if (!showApp) {
     return null;
   }

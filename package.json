@@ -51,9 +51,9 @@
     "eslint": "8.56.0",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "html-inline-css-webpack-plugin": "^1.11.2",
-    "html-inline-script-webpack-plugin": "^3.2.1",
-    "react-app-rewired": "^2.2.1",
+    "html-inline-css-webpack-plugin": "1.11.2",
+    "html-inline-script-webpack-plugin": "3.2.1",
+    "react-app-rewired": "2.2.1",
     "react-router-dom": "6.22.1",
     "rimraf": "5.0.5"
   },
