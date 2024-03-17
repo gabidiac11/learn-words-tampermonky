@@ -3,6 +3,7 @@ import { geniousSongSource, geniousAlbumSource } from "./genius";
 import { lentaArticleSource } from "./lenta";
 import { meduzaArticleSource } from "./meduzas";
 import { Source } from "./parseUtils";
+import { ruWikiSource } from "./ruWiki";
 import { uraArticleSource } from "./ura";
 
 export const allowedSources: Source[] = [
@@ -12,6 +13,7 @@ export const allowedSources: Source[] = [
   lentaArticleSource,
   uraArticleSource,
   dwArticleSource,
+  ruWikiSource
 ];
 
 export const loadScripts = () => {

@@ -13,6 +13,7 @@ export const parseHtml = (html: string): HTMLElement => {
 
   const sanitisedHtml = dompurify.sanitize(
     bodyHtmlOriginal
+      .replaceAll(/<table[^>]*>([\s\S]*?)<\/table>/gi, "")
       .replaceAll(/<picture[^>]*>([\s\S]*?)<\/picture>/gi, "")
       .replaceAll(/<figure[^>]*>([\s\S]*?)<\/figure>/gi, "")
       .replaceAll(/<video[^>]*>([\s\S]*?)<\/video>/gi, "")
@@ -32,12 +33,19 @@ export const parseHtml = (html: string): HTMLElement => {
 };
 
 const removeUnnecesaryWrappers = (el: HTMLElement) => {
+  let runs = 0;
   while (el.children.length === 1) {
     // take into account cases like <div> bla bla <a>link</a> </div>
     if (el.innerText !== (el.children[0] as HTMLElement).innerText) {
       break;
     }
     el.innerHTML = el.children[0].innerHTML;
+    if(runs > 500) {
+      // TODO: might be useful to understand how this happens... yeah
+      console.log("...", el, el.innerHTML);
+      break;
+    }
+    runs++;
   }
   for (let i = 0; i < el.children.length; i++) {
     removeUnnecesaryWrappers(el.children[i] as HTMLElement);
